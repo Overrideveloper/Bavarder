@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -11,13 +12,13 @@ namespace Bavarder.Enums
         Afghanistan,
         Albania,
         Algeria,
-        [Display(Name = "American Samoa")]
+        [Description("American Samoa")]
         AmericanSamoa,
         Andorra,
         Angola,
         Anguilla,
         Antarctica,
-        [Display(Name = "Antigua And Barbuda")]
+        [Description("Antigua And Barbuda")]
         AntiguaAndBarbuda,
         Argentina,
         Armenia,
@@ -36,82 +37,82 @@ namespace Bavarder.Enums
         Bermuda,
         Bhutan,
         Bolivia,
-        [Display(Name = "Bosnia And Herzegovina")]
+        [Description("Bosnia And Herzegovina")]
         BosniaAndHerzegovina,
         Botswana,
-        [Display(Name = "Bouvet Island")]
+        [Description("Bouvet Island")]
         BouvetIsland,
         Brazil,
-        [Display(Name = "British Indian Ocean Territory")]
+        [Description("British Indian Ocean Territory")]
         BritishIndianOceanTerritory,
-        [Display(Name = "Brunei Darussalam")]
+        [Description("Brunei Darussalam")]
         BruneiDarussalam, 
         Bulgaria,
-        [Display(Name = "Burkina Faso")]
+        [Description("Burkina Faso")]
         BurkinaFaso,
         Burundi,
         Cambodia,
         Cameroon,
         Canada,
-        [Display(Name = "Cape Verde")]
+        [Description("Cape Verde")]
         CapeVerde,
-        [Display(Name = "Cayman Islands")]
+        [Description("Cayman Islands")]
         CaymanIslands,
-        [Display(Name = "Central African Republic")]
+        [Description("Central African Republic")]
         CentralAfricanRepublic,
         Chad,
         Chile,
         China,
-        [Display(Name = "Christmas Island")]
+        [Description("Christmas Island")]
         ChristmasIsland,
-        [Display(Name = "Cocos (Keeling) Islands")]
+        [Description("Cocos (Keeling) Islands")]
         CocosKeelingIslands,
         Colombia,
         Comoros,
         Congo,
-        [Display(Name = "Congo DR")]
+        [Description("Congo DR")]
         CongoDR,
-        [Display(Name = "Cook Islands")]
+        [Description("Cook Islands")]
         CookIslands,
-        [Display(Name = "Costa Rica")]
+        [Description("Costa Rica")]
         CostaRica,
-        [Display(Name = "Cote d'Ivoire")]
+        [Description("Cote d'Ivoire")]
         CoteDivoire,
         Croatia,
         Cuba,
         Cyprus,
-        [Display(Name = "Czech Republic")]
+        [Description("Czech Republic")]
         CzechRepublic,
         Denmark,
         Djibouti,
         Dominica,
-        [Display(Name = "Dominican Republic")]
+        [Description("Dominican Republic")]
         DominicanRepublic, 
-        [Display(Name = "East Timor")]
+        [Description("East Timor")]
         EastTimor,
         Ecuador,
         Egypt,
-        [Display(Name = "El Salvador")]
+        [Description("El Salvador")]
         ElSalvador,
-        [Display(Name = "Equatorial Guinea")]
+        [Description("Equatorial Guinea")]
         EquatorialGuinea,
         Eritrea,
         Estonia,
         Ethiopia,
-        [Display(Name = "Falkand Islands (Malvinas)")]
+        [Description("Falkand Islands (Malvinas)")]
         FalklandIslands,
-        [Display(Name = "Faroe Islands")]
+        [Description("Faroe Islands")]
         FaroeIslands,
         Fiji,
         Finland,
         France,
-        [Display(Name = "France Metropolitan")]
+        [Description("France Metropolitan")]
         FranceMetropolitan,
-        [Display(Name = "French Guiana")]
+        [Description("French Guiana")]
         FrenchGuiana,
-        [Display(Name = "French Polynesia")]
+        [Description("French Polynesia")]
         FrenchPolynesia,
-        [Display(Name = "French Southern Territories")]
+        [Description("French Southern Territories")]
         FrenchSouthernTerritories,
         Gabon,
         Gambia,
@@ -126,22 +127,22 @@ namespace Bavarder.Enums
         Guam,
         Guatemala,
         Guinea,
-        [Display(Name = "Guinea-Bissau")]
+        [Description("Guinea-Bissau")]
         GuineaBissau,
         Guyana,
         Haiti,
-        [Display(Name = "Heard and Mc Donald Islands")]
+        [Description("Heard and Mc Donald Islands")]
         HeardandMcDonaldIslands,
-        [Display(Name = "Holy See (Vatican City State)")]
+        [Description("Holy See (Vatican City State)")]
         HolySee,
         Honduras,
-        [Display(Name = "Hong Kong")]
+        [Description("Hong Kong")]
         HongKong,
         Hungary,
         Iceland,
         India,
         Indonesia,
-        [Display(Name = "Iran (Islamic Republic Of)")]
+        [Description("Iran (Islamic Republic Of)")]
         Iran,
         Iraq,
         Ireland,
@@ -153,25 +154,25 @@ namespace Bavarder.Enums
         Kazakhstan,
         Kenya,
         Kiribati,
-        [Display(Name = "Korea, Democratic People's Republic of")]
+        [Description("Korea, Democratic People's Republic of")]
         KoreaDPR,
-        [Display(Name = "Korea, Republic of")]
+        [Description("Korea, Republic of")]
         KoreaReublic, 
         Kuwait,
         Kyrgyzstan,
-        [Display(Name = "Lao, People's Democratic Republic")]
+        [Description("Lao, People's Democratic Republic")]
         Lao,
         Latvia,
         Lebanon,
         Lesotho,
         Liberia,
-        [Display(Name = "Libyan Arab Jamahiriya")]
+        [Description("Libyan Arab Jamahiriya")]
         LibyanArabJamahiriya,
         Liechtenstein,
         Lithuania,
         Luxembourg,
         Macau,
-        [Display(Name = "Macedonia, The Former Yugoslav Republic of")]
+        [Description("Macedonia, The Former Yugoslav Republic of")]
         Macedonia,
         Madagascar,
         Malawi,
@@ -179,16 +180,16 @@ namespace Bavarder.Enums
         Maldives,
         Mali,
         Malta,
-        [Display(Name = "Marshall Islands")]
+        [Description("Marshall Islands")]
         MarshallIslands,
         Martinique,
         Mauritania,
         Mauritius,
         Mayotte,
         Mexico,
-        [Display(Name = "Micronesia, Federated States of")]
+        [Description("Micronesia, Federated States of")]
         Micronesia,
-        [Display(Name = "Moldova, Republic of")]
+        [Description("Moldova, Republic of")]
         Moldova,
         Monaco,
         Mongolia,
@@ -200,26 +201,26 @@ namespace Bavarder.Enums
         Nauru,
         Nepal,
         Netherlands,
-        [Display(Name = "Natherlands Antilles")]
+        [Description("Natherlands Antilles")]
         NetherlandsAntilles,
-        [Display(Name = "New Caledonia")]
+        [Description("New Caledonia")]
         NewCaledonia,
-        [Display(Name = "New Zealand")]
+        [Description("New Zealand")]
         NewZealand,
         Nicaragua,
         Niger,
         Nigeria,
         Niue,
-        [Display(Name = "Norfolk Island")]
+        [Description("Norfolk Island")]
         NorfolkIsland,
-        [Display(Name = "Nothern Mariana Islands")]
+        [Description("Nothern Mariana Islands")]
         NorthernMarianaIslands,
         Norway,
         Oman,
         Pakistan,
         Palau,
         Panama,
-        [Display(Name = "Papau New Guinea")]
+        [Description("Papau New Guinea")]
         PapuaNewGuinea,
         Paraguay,
         Peru,
@@ -227,97 +228,97 @@ namespace Bavarder.Enums
         Pitcairn,
         Poland,
         Portugal,
-        [Display(Name = "Puerto Rico")]
+        [Description("Puerto Rico")]
         PuertoRico,
         Qatar,
         Reunion,
         Romania,
-        [Display(Name = "Russian Federation")]
+        [Description("Russian Federation")]
         RussianFederation,
         Rwanda,
-        [Display(Name = "Saint Kitts and Nevis")]
+        [Description("Saint Kitts and Nevis")]
         SaintKittsandNevis,
-        [Display(Name = "Saint Lucia")]
+        [Description("Saint Lucia")]
         SaintLucia,
-        [Display(Name = "Saint Vincent and the Grenadines")]
+        [Description("Saint Vincent and the Grenadines")]
         SaintVincentandtheGrenadines,
         Samoa,
-        [Display(Name = "San Marino")]
+        [Description("San Marino")]
         SanMarino,
-        [Display(Name = "Sao Tome and Principe")]
+        [Description("Sao Tome and Principe")]
         SaoTomeandPrincipe,
-        [Display(Name = "Saudi Arabia")]
+        [Description("Saudi Arabia")]
         SaudiArabia, 
         Senegal, 
         Seychelles,
-        [Display(Name = "Sierra Leone")]
+        [Description("Sierra Leone")]
         SierraLeone, 
         Singapore,
-        [Display(Name = "Slovakia (Slovak Republic)")]
+        [Description("Slovakia (Slovak Republic)")]
         Slovakia,
         Slovenia, 
-        [Display(Name = "Solomon Islands")]
+        [Description("Solomon Islands")]
         SolomonIslands,
         Somalia,
-        [Display(Name = "South Africa")]
+        [Description("South Africa")]
         SouthAfrica,
-        [Display(Name = "South Georgia and the South Sandwich Islands")]
+        [Description("South Georgia and the South Sandwich Islands")]
         SouthGeorgiaandtheSouthSandwichIslands,
         Spain,
-        [Display(Name = "Sri Lanka")]
+        [Description("Sri Lanka")]
         SriLanka, 
-        [Display(Name = "St. Helena")]
+        [Description("St. Helena")]
         StHelena, 
-        [Display(Name = "St. Pierre and Miquelon")]
+        [Description("St. Pierre and Miquelon")]
         StPierreandMiquelon,
         Sudan,
         Suriname,
-        [Display(Name = "Svalbard and Jan Mayen Islands")]
+        [Description("Svalbard and Jan Mayen Islands")]
         SvalbardandJanMayenIslands, 
         Swaziland,
         Sweden,
         Switzerland,
-        [Display(Name = "Syrian Arab Republic")]
+        [Description("Syrian Arab Republic")]
         SyrianArabRepublic,
-        [Display(Name = "Taiwan, Province of China")]
+        [Description("Taiwan, Province of China")]
         Taiwan,
         Tajikistan,
-        [Display(Name = "Tanzania, United Republic of")]
+        [Description("Tanzania, United Republic of")]
         Tanzania,
         Thailand,
         Togo,
         Tokelau,
         Tonga,
-        [Display(Name = "Trinidad and Tobago")]
+        [Description("Trinidad and Tobago")]
         TrinidadandTobago,
         Tunisia,
         Turkey,
         Turkmenistan,
-        [Display(Name = "Turks and Caicos Islands")]
+        [Description("Turks and Caicos Islands")]
         TurksandCaicosIslands, 
         Tuvalu,
         Uganda,
         Ukraine,
-        [Display(Name = "United Arab Emirates")]
+        [Description("United Arab Emirates")]
         UnitedArabEmirates,
-        [Display(Name = "United Kingdom")]
+        [Description("United Kingdom")]
         UnitedKingdom, 
-        [Display(Name = "United States")]
+        [Description("United States")]
         UnitedStates,
-        [Display(Name = "United States Minor Outlying Islands")]
+        [Description("United States Minor Outlying Islands")]
         UnitedStatesMinorOutlyingIslands, 
         Uruguay,
         Uzbekistan,
         Vanuatu,
         Venezuela,
         Vietnam,
-        [Display(Name = "Virgin Islands (British)")]
+        [Description("Virgin Islands (British)")]
         VirginIslandsBritish,
-        [Display(Name = "Virgin Islands (U.S.)")]
+        [Description("Virgin Islands (U.S.)")]
         VirginIslandsUS,
-        [Display(Name = "Wallis and Futuna Islands")]
+        [Description("Wallis and Futuna Islands")]
         WallisandFutunaIslands,
-        [Display(Name = "Western Sahara")]
+        [Description("Western Sahara")]
         WesternSahara, 
         Yemen,
         Yugoslavia,

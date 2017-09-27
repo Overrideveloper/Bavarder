@@ -10,9 +10,9 @@ namespace Bavarder.Models
         public string MidName { get; set; }
         public string FirstName { get; set; }
         public string Email { get; set; }
-        public virtual Gender Gender { get; set; }
-        public virtual Relationship Relationship { get; set; }
-        public virtual Country Country { get; set; }
+        public Gender Gender { get; set; }
+        public Relationship Relationship { get; set; }
+        public Country Country { get; set; }
         public byte[] UserPhoto { get; set; }
     }
 

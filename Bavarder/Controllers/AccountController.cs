@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Bavarder.Models;
+using System.IO;
 
 namespace Bavarder.Controllers
 {
@@ -49,6 +50,7 @@ namespace Bavarder.Controllers
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
+                    Session["uid"] = user.Id;
                     return RedirectToLocal(returnUrl);
                 }
                 else
@@ -74,15 +76,35 @@ namespace Bavarder.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register([Bind(Exclude = "UserPhoto")]RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
+                byte[] imageData = null;
+                if (Request.Files.Count > 0)
+                {
+                    HttpPostedFileBase profImg = Request.Files["UserPhoto"];
+                    using (var binary = new BinaryReader(profImg.InputStream))
+                    {
+                        imageData = binary.ReadBytes(profImg.ContentLength);
+                    }
+                }
+
                 var user = new ApplicationUser() { UserName = model.UserName };
+                user.Surname = model.Surname;
+                user.MidName = model.MidName;
+                user.FirstName = model.FirstName;
+                user.Email = model.Email;
+                user.Gender = model.Gender;
+                user.Relationship = model.Relationship;
+                user.Country = model.Country;
+                user.UserPhoto = imageData;
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInAsync(user, isPersistent: false);
+                    Session["uid"] = user.Id;
                     return RedirectToAction("Index", "Home");
                 }
                 else

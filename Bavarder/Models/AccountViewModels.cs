@@ -68,17 +68,16 @@ namespace Bavarder.Models
 
         [Required]
         [Display(Name = "Gender")]
-        public virtual Gender Gender { get; set; }
+        public Gender Gender { get; set; }
 
         [Required]
         [Display(Name = "Relationship")]
-        public virtual Relationship Relationship { get; set; }
+        public Relationship Relationship { get; set; }
 
         [Required]
         [Display(Name = "Location")]
-        public virtual Country Country { get; set; }
+        public Country Country { get; set; }
 
-        [Required]
         [Display(Name = "User Photo")]
         public byte[] UserPhoto { get; set; }
 

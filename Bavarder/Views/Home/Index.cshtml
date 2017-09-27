@@ -1,31 +1,194 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using Bavarder.Models
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Profile";
+    var db = new ApplicationDbContext();
+    var uid = User.Identity.GetUserId();
+    var user = db.Users.Find(uid);
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-</div>
+<hr class="">
+<div class="container target">
+    <div class="row">
+        <div class="col-sm-10">
+            <h1 class="">@User.Identity.Name</h1>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+            <button type="button" class="btn btn-info">Send a message</button>
+            <br>
+        </div>
+        <div class="col-sm-2">
+            <a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="@Url.Action("UserPhoto", "Home")"></a>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <br>
+    <div class="row">
+        <div class="col-sm-3">
+            <!--left col-->
+            <ul class="list-group">
+                <li class="list-group-item text-capitalize" contenteditable="false">Profile</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Joined</strong></span> 2.13.2014</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Last seen</strong></span> Yesterday</li>
+                <li class="list-group-item text-right">
+                    <span class="pull-left"><strong class="">Real name</strong></span>
+                    @if (user.MidName != null) { <b>@user.Surname @user.MidName @user.FirstName</b>}
+                    else { <b>@user.Surname @user.FirstName</b> }
+                </li>
+                <li class="list-group-item text-right">
+                    <span class="pull-left"><strong class="">Gender: </strong></span> @user.Gender
+                </li>
+                <li class="list-group-item text-right">
+                    <span class="pull-left"><strong class="">Location: </strong></span> @user.Country
+                </li>
+
+                <li class="list-group-item text-right">
+                    <span class="pull-left"><strong class="">Relationship: </strong></span> 
+                    @switch (user.Relationship)
+                    {
+                        case Bavarder.Enums.Relationship.Engaged:
+                            <b>Engaged</b>
+                            break;
+                        case Bavarder.Enums.Relationship.InARelationship:
+                            <b>In a relationship</b>
+                            break;
+                        case Bavarder.Enums.Relationship.ItsComplicated:
+                            <b>It's complicated</b>  
+                            break;
+                        case Bavarder.Enums.Relationship.Married:
+                            <b>Married</b>
+                            break;
+                        case Bavarder.Enums.Relationship.Single:
+                            <b>Single</b>
+                            break;        
+                    }
+                </li>
+            </ul>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Website <i class="fa fa-link fa-1x"></i>
+                </div>
+                <div class="panel-body">
+                    <a href="http://bootply.com" class="">bootply.com</a>
+                </div>
+            </div>
+
+            <ul class="list-group">
+                <li class="list-group-item text-muted">
+                    Activity <i class="fa fa-dashboard fa-1x"></i>
+                </li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Shares</strong></span> 125</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Likes</strong></span> 13</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Posts</strong></span> 37</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Followers</strong></span> 78</li>
+            </ul>
+            <div class="panel panel-default">
+                <div class="panel-heading">Social Media</div>
+                <div class="panel-body">
+                    <i class="fa fa-facebook fa-2x"></i>  <i class="fa fa-github fa-2x"></i>
+                    <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i>  <i class="fa fa-google-plus fa-2x"></i>
+                </div>
+            </div>
+        </div>
+        <!--/col-3-->
+        <div class="col-sm-9" style="" contenteditable="false">
+            <div class="panel panel-default target">
+                <div class="panel-heading" contenteditable="false">Pets I Own</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="thumbnail">
+                                <img alt="300x200" src="http://lorempixel.com/600/200/people">
+                                <div class="caption">
+                                    <h3>
+                                        Rover
+                                    </h3>
+                                    <p>
+                                        Cocker Spaniel who loves treats.
+                                    </p>
+                                    <p>
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="thumbnail">
+                                <img alt="300x200" src="http://lorempixel.com/600/200/city">
+                                <div class="caption">
+                                    <h3>
+                                        Marmaduke
+                                    </h3>
+                                    <p>
+                                        Is just another friendly dog.
+                                    </p>
+                                    <p>
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="thumbnail">
+                                <img alt="300x200" src="http://lorempixel.com/600/200/sports">
+                                <div class="caption">
+                                    <h3>
+                                        Rocky
+                                    </h3>
+                                    <p>
+                                        Loves catnip and naps. Not fond of children.
+                                    </p>
+                                    <p>
+
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Starfox221's Bio</div>
+                <div class="panel-body">
+                    A long description about me.
+
+                </div>
+            </div>
+        </div>
+
+        <div id="push"></div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+    <script src="/plugins/bootstrap-select.min.js"></script>
+    <script src="/codemirror/jquery.codemirror.js"></script>
+    <script src="/beautifier.js"></script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-40413119-1', 'bootply.com');
+        ga('send', 'pageview');
+    </script>
+    <script>
+        jQuery.fn.shake = function (intShakes, intDistance, intDuration, foreColor) {
+            this.each(function () {
+                if (foreColor && foreColor != "null") {
+                    $(this).css("color", foreColor);
+                }
+                $(this).css("position", "relative");
+                for (var x = 1; x <= intShakes; x++) {
+                    $(this).animate({ left: (intDistance * -1) }, (((intDuration / intShakes) / 4)))
+                    .animate({ left: intDistance }, ((intDuration / intShakes) / 2))
+                    .animate({ left: 0 }, (((intDuration / intShakes) / 4)));
+                    $(this).css("color", "");
+                }
+            });
+            return this;
+        };
+    </script>
+    <script src="~/plugins/bootstrap-pager.js"></script>
 </div>

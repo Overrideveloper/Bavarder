@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -8,15 +9,15 @@ namespace Bavarder.Enums
 {
     public enum Relationship
     {
-        [Display(Name = "Single")]
+        [Description("Single")]
         Single,
-        [Display(Name = "In a relationship")]
+        [Description("In a relationship")]
         InARelationship,
-        [Display(Name = "Engaged")]
+        [Description("Engaged")]
         Engaged,
-        [Display(Name = "Married")]
+        [Description("Married")]
         Married,
-        [Display(Name = "It's complicated")]
+        [Description("It's complicated")]
         ItsComplicated
     }
 }
