@@ -179,6 +179,14 @@
     <Compile Include="Migrations\201709261329012_migration1.Designer.cs">
       <DependentUpon>201709261329012_migration1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709270945564_migration2.cs" />
+    <Compile Include="Migrations\201709270945564_migration2.Designer.cs">
+      <DependentUpon>201709270945564_migration2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709270957578_migration3.cs" />
+    <Compile Include="Migrations\201709270957578_migration3.Designer.cs">
+      <DependentUpon>201709270957578_migration3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -197,6 +205,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\user.png" />
     <Content Include="plugins\bootstrap-pager.js" />
+    <Content Include="plugins\modal-image.css" />
+    <Content Include="plugins\modal-image.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -250,6 +260,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201709261329012_migration1.resx">
       <DependentUpon>201709261329012_migration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709270945564_migration2.resx">
+      <DependentUpon>201709270945564_migration2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709270957578_migration3.resx">
+      <DependentUpon>201709270957578_migration3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

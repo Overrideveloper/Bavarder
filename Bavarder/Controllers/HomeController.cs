@@ -11,11 +11,13 @@ namespace Bavarder.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize]
         public ActionResult Index()
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -23,6 +25,7 @@ namespace Bavarder.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
@@ -30,13 +33,18 @@ namespace Bavarder.Controllers
             return View();
         }
 
+        [Authorize]
         public FileContentResult UserPhoto()
         {
                 String userId = User.Identity.GetUserId();
                 var dbUsers = new ApplicationDbContext();
                 var userImage = dbUsers.Users.Where(s => s.Id == userId).FirstOrDefault();
-
-                if (userImage.UserPhoto == null)
+                
+                if (userImage.UserPhoto != null)
+                {
+                    return new FileContentResult(userImage.UserPhoto, "image/png");
+                }
+                else
                 {
                     string fileName = HttpContext.Server.MapPath(@"~/Images/user.png");
                     byte[] imageData = null;
@@ -45,11 +53,7 @@ namespace Bavarder.Controllers
                     FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
                     BinaryReader br = new BinaryReader(fs);
                     imageData = br.ReadBytes((int)imageFileLength);
-                    return File(imageData, "image/png");
-                }
-                else
-                {
-                    return new FileContentResult(userImage.UserPhoto, "image/png");
+                    return new FileContentResult(imageData, "image/png");
                 }
         }
     }

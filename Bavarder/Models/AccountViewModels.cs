@@ -1,4 +1,5 @@
 ﻿using Bavarder.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Bavarder.Models
@@ -51,7 +52,7 @@ namespace Bavarder.Models
         public string Surname { get; set; }
 
         [Display(Name = "Middle name")]
-        public string MidName { get; set; }
+        public virtual string MidName { get; set; }
 
         [Required]
         [Display(Name = "First name")]
@@ -79,7 +80,28 @@ namespace Bavarder.Models
         public Country Country { get; set; }
 
         [Display(Name = "User Photo")]
-        public byte[] UserPhoto { get; set; }
+        public virtual byte[] UserPhoto { get; set; }
+
+        [Display(Name = "Website")]
+        public virtual string Website { get; set; }
+
+        [Display(Name = "Bio")]
+        [DataType(DataType.MultilineText)]
+        public virtual string Bio { get; set; }
+
+        [Display(Name = "Twitter")]
+        public virtual string Twitter { get; set; }
+
+        [Display(Name = "Snapchat")]
+        public virtual string Snapchat { get; set; }
+
+        [Display(Name = "Phone number")]
+        public virtual string PhoneNumber { get; set; }
+
+        [Display(Name = "Date of Birth")]
+        [Required]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        public DateTime DOB { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

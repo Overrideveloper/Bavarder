@@ -99,6 +99,8 @@ namespace Bavarder.Controllers
                 user.Relationship = model.Relationship;
                 user.Country = model.Country;
                 user.UserPhoto = imageData;
+                user.DOB = model.DOB;
+                user.DateJoined = DateTime.Now;
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

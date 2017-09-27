@@ -7,41 +7,61 @@
     var user = db.Users.Find(uid);
 }
 
+<link rel="stylesheet" href="~/plugins/modal-image.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <hr class="">
-<div class="container target">
+<div class="target">
     <div class="row">
         <div class="col-sm-10">
             <h1 class="">@User.Identity.Name</h1>
-
-            <button type="button" class="btn btn-info">Send a message</button>
             <br>
+            <a class="btn btn-info" href=""> Update Profile </a>
         </div>
         <div class="col-sm-2">
-            <a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="@Url.Action("UserPhoto", "Home")"></a>
+            <img title="profile image" id="profileImg" class="img-circle img-responsive" src="@Url.Action("UserPhoto", "Home")">
+            <div id="myModal" class="modal fade in">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div id='myModalContent'>
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <img class="modal-content" id="modalImg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <br>
+    <br /><br />
     <div class="row">
         <div class="col-sm-3">
             <!--left col-->
             <ul class="list-group">
                 <li class="list-group-item text-capitalize" contenteditable="false">Profile</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Joined</strong></span> 2.13.2014</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Last seen</strong></span> Yesterday</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Joined</strong></span> <small>@user.DateJoined.ToShortDateString()</small></li>
                 <li class="list-group-item text-right">
-                    <span class="pull-left"><strong class="">Real name</strong></span>
-                    @if (user.MidName != null) { <b>@user.Surname @user.MidName @user.FirstName</b>}
-                    else { <b>@user.Surname @user.FirstName</b> }
+                    <span class="pull-left"><strong class="">Real name:</strong></span>
+                    @if (user.MidName != null) { <small>@user.Surname @user.MidName @user.FirstName</small>}
+                    else { <small>@user.Surname @user.FirstName</small> }
                 </li>
                 <li class="list-group-item text-right">
-                    <span class="pull-left"><strong class="">Gender: </strong></span> @user.Gender
+                    <span class="pull-left"><strong class="">Gender </strong></span> @user.Gender
                 </li>
                 <li class="list-group-item text-right">
-                    <span class="pull-left"><strong class="">Location: </strong></span> @user.Country
+                    <span class="pull-left"><strong class="">Born </strong></span> @user.DOB.ToString("dd MMMM")
+                </li>
+                <li class="list-group-item text-right">
+                    <span class="pull-left"><strong class="">Nationality </strong></span> @user.Country
                 </li>
 
                 <li class="list-group-item text-right">
-                    <span class="pull-left"><strong class="">Relationship: </strong></span> 
+                    <span class="pull-left"><strong class="">Relationship </strong></span> 
                     @switch (user.Relationship)
                     {
                         case Bavarder.Enums.Relationship.Engaged:
@@ -67,128 +87,36 @@
                     Website <i class="fa fa-link fa-1x"></i>
                 </div>
                 <div class="panel-body">
-                    <a href="http://bootply.com" class="">bootply.com</a>
+                    @if (user.Website != null){ <a href="@user.Website">@user.Website</a> }
+                    else
+                    { <a></a> }
                 </div>
             </div>
 
-            <ul class="list-group">
-                <li class="list-group-item text-muted">
-                    Activity <i class="fa fa-dashboard fa-1x"></i>
-                </li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Shares</strong></span> 125</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Likes</strong></span> 13</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Posts</strong></span> 37</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Followers</strong></span> 78</li>
-            </ul>
             <div class="panel panel-default">
                 <div class="panel-heading">Social Media</div>
                 <div class="panel-body">
-                    <i class="fa fa-facebook fa-2x"></i>  <i class="fa fa-github fa-2x"></i>
-                    <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i>  <i class="fa fa-google-plus fa-2x"></i>
+                    @if(user.Twitter != null){ <span><i class="fa fa-twitter fa-2x"></i> @user.Twitter</span><br /> }
+                    else{ <a></a> }
+                    @if (user.Snapchat != null){ <span><i class="fa fa-snapchat fa-2x"></i> @user.Snapchat</span> }
+                    else { <a></a> }                                                              
                 </div>
             </div>
         </div>
         <!--/col-3-->
         <div class="col-sm-9" style="" contenteditable="false">
-            <div class="panel panel-default target">
-                <div class="panel-heading" contenteditable="false">Pets I Own</div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="thumbnail">
-                                <img alt="300x200" src="http://lorempixel.com/600/200/people">
-                                <div class="caption">
-                                    <h3>
-                                        Rover
-                                    </h3>
-                                    <p>
-                                        Cocker Spaniel who loves treats.
-                                    </p>
-                                    <p>
-
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="thumbnail">
-                                <img alt="300x200" src="http://lorempixel.com/600/200/city">
-                                <div class="caption">
-                                    <h3>
-                                        Marmaduke
-                                    </h3>
-                                    <p>
-                                        Is just another friendly dog.
-                                    </p>
-                                    <p>
-
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="thumbnail">
-                                <img alt="300x200" src="http://lorempixel.com/600/200/sports">
-                                <div class="caption">
-                                    <h3>
-                                        Rocky
-                                    </h3>
-                                    <p>
-                                        Loves catnip and naps. Not fond of children.
-                                    </p>
-                                    <p>
-
-                                    </p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
             <div class="panel panel-default">
-                <div class="panel-heading">Starfox221's Bio</div>
+                <div class="panel-heading">Your Bio</div>
                 <div class="panel-body">
-                    A long description about me.
-
+                    @user.Bio
                 </div>
             </div>
         </div>
-
         <div id="push"></div>
-    </div>
-    <script src="/plugins/bootstrap-select.min.js"></script>
-    <script src="/codemirror/jquery.codemirror.js"></script>
-    <script src="/beautifier.js"></script>
-    <script>
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date(); a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-40413119-1', 'bootply.com');
-        ga('send', 'pageview');
-    </script>
-    <script>
-        jQuery.fn.shake = function (intShakes, intDistance, intDuration, foreColor) {
-            this.each(function () {
-                if (foreColor && foreColor != "null") {
-                    $(this).css("color", foreColor);
-                }
-                $(this).css("position", "relative");
-                for (var x = 1; x <= intShakes; x++) {
-                    $(this).animate({ left: (intDistance * -1) }, (((intDuration / intShakes) / 4)))
-                    .animate({ left: intDistance }, ((intDuration / intShakes) / 2))
-                    .animate({ left: 0 }, (((intDuration / intShakes) / 4)));
-                    $(this).css("color", "");
-                }
-            });
-            return this;
-        };
-    </script>
-    <script src="~/plugins/bootstrap-pager.js"></script>
+    </div> 
 </div>
+</div>
+@section Scripts{
+<script src="~/plugins/bootstrap-pager.js"></script>
+<script src="~/plugins/modal-image.js"></script>
+}
