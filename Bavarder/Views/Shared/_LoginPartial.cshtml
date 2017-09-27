@@ -1,4 +1,10 @@
 ﻿@using Microsoft.AspNet.Identity
+@using Bavarder.Models
+@{
+    var db = new ApplicationDbContext();
+    var uid = User.Identity.GetUserId();
+    var user = db.Users.Find(uid);
+}
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -7,7 +13,18 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @Html.ActionLink("Hello " + User.Identity.Name + "!", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @if (user.UserPhoto != null)
+            {
+                <img title="profile image" id="profileImg" class="img-circle img-responsive" width="30" height="20" src="~/UploadedFiles/@Bavarder.Enums.UploadType.ProfileImage/@uid/@user.UserPhoto">
+            }
+            else
+            {
+                <img title="profile image" id="profileImg" class="img-circle img-responsive" width="30" height="20" src="~/Images/user.png">
+            }
+        </li>
+        <li>@Html.ActionLink(User.Identity.Name, "UserProfile", "Home")</li>
+        <li>
+            @Html.ActionLink("Manage Account", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage Account" })
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
     </ul>

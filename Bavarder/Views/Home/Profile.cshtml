@@ -15,11 +15,19 @@
         <div class="col-sm-10">
             <h1 class="">@User.Identity.Name</h1>
             <br>
-            <a class="btn btn-info" href=""> Update Profile </a>
+            <a class="btn btn-info" href="@Url.Action("UpdateProfile", "Home", new { uid = uid })"> Update Profile </a>
+            <br />
         </div>
         <div class="col-sm-2">
-            <img title="profile image" id="profileImg" class="img-circle img-responsive" src="@Url.Action("UserPhoto", "Home")">
-            <div id="myModal" class="modal fade in">
+            @if (user.UserPhoto != null)
+            {
+                <img title="profile image" id="profileImg" class="img-circle img-responsive" src="~/UploadedFiles/@Bavarder.Enums.UploadType.ProfileImage/@uid/@user.UserPhoto">
+            }
+            else
+            {
+                <img title="profile image" id="profileImg" class="img-circle img-responsive" src="~/Images/user.png">    
+            }
+                <div id="myModal" class="modal fade in">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div id='myModalContent'>
@@ -44,7 +52,7 @@
             <!--left col-->
             <ul class="list-group">
                 <li class="list-group-item text-capitalize" contenteditable="false">Profile</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Joined</strong></span> <small>@user.DateJoined.ToShortDateString()</small></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Joined</strong></span> <small>@user.DateJoined.ToString("dd MMMM yyyy")</small></li>
                 <li class="list-group-item text-right">
                     <span class="pull-left"><strong class="">Real name:</strong></span>
                     @if (user.MidName != null) { <small>@user.Surname @user.MidName @user.FirstName</small>}
@@ -88,18 +96,18 @@
                 </div>
                 <div class="panel-body">
                     @if (user.Website != null){ <a href="@user.Website">@user.Website</a> }
-                    else
-                    { <a></a> }
                 </div>
             </div>
 
             <div class="panel panel-default">
-                <div class="panel-heading">Social Media</div>
+                <div class="panel-heading">Contact Information</div>
                 <div class="panel-body">
                     @if(user.Twitter != null){ <span><i class="fa fa-twitter fa-2x"></i> @user.Twitter</span><br /> }
-                    else{ <a></a> }
-                    @if (user.Snapchat != null){ <span><i class="fa fa-snapchat fa-2x"></i> @user.Snapchat</span> }
-                    else { <a></a> }                                                              
+                    @if (user.Snapchat != null){ <span><i class="fa fa-snapchat fa-2x"></i> @user.Snapchat</span><br /> }
+                    @if (user.EmailVisible != null && user.EmailVisible == true && user.Email != null)
+                    {  <span><i class="fa fa-envelope fa-2x"></i> @user.Email</span><br /> }
+                    @if (user.PhoneVisible != null && user.PhoneVisible == true && user.PhoneNumber != null)
+                    {  <span><i class="fa fa-phone fa-2x"></i> @user.PhoneNumber</span><br /> }                                            
                 </div>
             </div>
         </div>
@@ -108,7 +116,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Your Bio</div>
                 <div class="panel-body">
-                    @user.Bio
+                    <h2>@if (user.Bio != null){ @user.Bio }</h2>
                 </div>
             </div>
         </div>

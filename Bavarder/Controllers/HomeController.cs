@@ -6,15 +6,17 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using System.IO;
 using Bavarder.Models;
+using System.Threading.Tasks;
+using Bavarder.Services;
 
 namespace Bavarder.Controllers
 {
     public class HomeController : Controller
     {
         [Authorize]
-        public ActionResult Index()
+        public ActionResult UserProfile()
         {
-            return View();
+            return View("Profile");
         }
 
         [Authorize]
@@ -34,27 +36,44 @@ namespace Bavarder.Controllers
         }
 
         [Authorize]
-        public FileContentResult UserPhoto()
+        [HttpGet]
+        public ActionResult UpdateProfile(string uid)
         {
-                String userId = User.Identity.GetUserId();
-                var dbUsers = new ApplicationDbContext();
-                var userImage = dbUsers.Users.Where(s => s.Id == userId).FirstOrDefault();
-                
-                if (userImage.UserPhoto != null)
+            var appDbContext = new ApplicationDbContext();
+            var viewModel = appDbContext.Users.Find(uid);
+            return View(viewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateProfile(ApplicationUser AppUser, HttpPostedFileBase UserPhoto)
+        {
+            if (UserPhoto != null)
+            {
+                var info = new FileInfo(UserPhoto.FileName);
+                if (info.Extension.ToLower() == ".jpg" || info.Extension.ToLower() == ".jpeg" || info.Extension.ToLower() == ".png")
                 {
-                    return new FileContentResult(userImage.UserPhoto, "image/png");
+                    //file format compatible
                 }
                 else
                 {
-                    string fileName = HttpContext.Server.MapPath(@"~/Images/user.png");
-                    byte[] imageData = null;
-                    FileInfo fileInfo = new FileInfo(fileName);
-                    long imageFileLength = fileInfo.Length;
-                    FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-                    BinaryReader br = new BinaryReader(fs);
-                    imageData = br.ReadBytes((int)imageFileLength);
-                    return new FileContentResult(imageData, "image/png");
+                    ModelState.AddModelError("incompatible", "File format not supported");
                 }
+            }
+
+            if (ModelState.IsValid)
+            {
+                if (UserPhoto != null && UserPhoto.FileName != "")
+                {
+                    AppUser.UserPhoto = new FileUploader().UploadFile(UserPhoto, Enums.UploadType.ProfileImage, User.Identity.GetUserId());
+                }
+                var appDB = new ApplicationDbContext();
+                appDB.Entry(AppUser).State = System.Data.Entity.EntityState.Modified;
+                appDB.SaveChanges();
+                return RedirectToAction("UserProfile");
+            }
+            return View(AppUser);
         }
     }
 }

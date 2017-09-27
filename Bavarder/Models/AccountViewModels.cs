@@ -76,11 +76,11 @@ namespace Bavarder.Models
         public Relationship Relationship { get; set; }
 
         [Required]
-        [Display(Name = "Location")]
+        [Display(Name = "Nationality")]
         public Country Country { get; set; }
 
-        [Display(Name = "User Photo")]
-        public virtual byte[] UserPhoto { get; set; }
+        [Display(Name = "Profile Photo")]
+        public virtual string UserPhoto { get; set; }
 
         [Display(Name = "Website")]
         public virtual string Website { get; set; }
@@ -102,6 +102,12 @@ namespace Bavarder.Models
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
         public DateTime DOB { get; set; }
+
+        [Display(Name = "Show e-mail on profile?")]
+        public virtual bool EmailVisible { get; set; }
+
+        [Display(Name = "Show phone number on profile?")]
+        public virtual bool PhoneVisible { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

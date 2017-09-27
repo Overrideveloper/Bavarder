@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Bavarder.Models;
 using System.IO;
+using Bavarder.Services;
 
 namespace Bavarder.Controllers
 {
@@ -50,7 +51,6 @@ namespace Bavarder.Controllers
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
-                    Session["uid"] = user.Id;
                     return RedirectToLocal(returnUrl);
                 }
                 else
@@ -76,20 +76,22 @@ namespace Bavarder.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register([Bind(Exclude = "UserPhoto")]RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase UserPhoto)
         {
             if (ModelState.IsValid)
             {
-                byte[] imageData = null;
-                if (Request.Files.Count > 0)
+                if (UserPhoto != null)
                 {
-                    HttpPostedFileBase profImg = Request.Files["UserPhoto"];
-                    using (var binary = new BinaryReader(profImg.InputStream))
+                    var info = new FileInfo(UserPhoto.FileName);
+                    if (info.Extension.ToLower() == ".jpg" || info.Extension.ToLower() == ".jpeg" || info.Extension.ToLower() == ".png")
                     {
-                        imageData = binary.ReadBytes(profImg.ContentLength);
+                        //file format compatible
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("incompatible", "File format not supported");
                     }
                 }
-
                 var user = new ApplicationUser() { UserName = model.UserName };
                 user.Surname = model.Surname;
                 user.MidName = model.MidName;
@@ -98,7 +100,9 @@ namespace Bavarder.Controllers
                 user.Gender = model.Gender;
                 user.Relationship = model.Relationship;
                 user.Country = model.Country;
-                user.UserPhoto = imageData;
+                user.UserPhoto = UserPhoto != null && UserPhoto.FileName != ""
+                                    ? new FileUploader().UploadFile(UserPhoto, Enums.UploadType.ProfileImage, User.Identity.GetUserId())
+                                    : null;
                 user.DOB = model.DOB;
                 user.DateJoined = DateTime.Now;
 
@@ -106,7 +110,6 @@ namespace Bavarder.Controllers
                 if (result.Succeeded)
                 {
                     await SignInAsync(user, isPersistent: false);
-                    Session["uid"] = user.Id;
                     return RedirectToAction("Index", "Home");
                 }
                 else
