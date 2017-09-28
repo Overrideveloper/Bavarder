@@ -28,10 +28,8 @@ namespace Bavarder.Controllers
         }
 
         [Authorize]
-        public ActionResult Contact()
+        public ActionResult GeneralChat()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
 

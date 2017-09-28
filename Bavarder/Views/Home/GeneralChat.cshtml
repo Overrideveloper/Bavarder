@@ -1,0 +1,86 @@
+﻿@using Bavarder.Models
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "General Chat";
+    var db = new ApplicationDbContext();
+    var uid = User.Identity.GetUserId();
+    var user = db.Users.Find(uid);
+}
+
+<div class="container">
+    <div class="row " style="padding-top:40px;">
+        <h3 class="text-center">GENERAL CHAT</h3>
+        <br /><br />
+        <div class="col-md-8">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    RECENT CHAT HISTORY
+                </div>
+                <div class="panel-body">
+                    <ul class="media-list" id="discussion" style="height:400px; overflow-y:auto">
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input type="text" id="message" class="form-control" placeholder="Enter Message" />
+                        <span class="input-group-btn">
+                            <input type="button" id="sendmessage" class="btn btn-info" value="SEND"/>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    ONLINE USERS
+                </div>
+                <div class="panel-body">
+                    <ul class="media-list" id="activelist" style="height:400px; overflow-y:auto"></ul>
+                </div>
+            </div>
+            <input type="hidden" id="displayname" />
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="~/signalr/hubs"></script> 
+    <script>
+        $(function () {
+            var chat = $.connection.generalChatHub;
+
+            chat.client.newMessage = function (uid, username, photo, message) {
+                $('#discussion').append
+                (
+                    '<li class=media"><div class="media-body"><div class="media"><a class="pull-left" href="#">'+
+                    '<img class="media-object img-circle" width="30" height="30" src="../../UploadedFiles/@Bavarder.Enums.UploadType.ProfileImage/' + uid + '/' + photo + '" /></a>'+
+                    '<div class="media-body" >' + htmlEncode(message) + '<br /><small class="text-muted">' + htmlEncode(username) + ' | @DateTime.Now.ToShortDateString() at @DateTime.Now.ToShortTimeString()</small>'+
+                    '<hr /></div></div></div></li>'
+                );
+            };
+
+            $('#activelist').append
+            (
+                '<li class="media"><div class="media-body"><div class="media"><a class="pull-left" href="#">'+
+                '<img class="media-object img-circle" style="max-height:40px;" src="../../UploadedFiles/@Bavarder.Enums.UploadType.ProfileImage/@uid/@user.UserPhoto" /></a>'+
+                '<div class="media-body" ><h5>@user.UserName </h5><small class="text-muted">Active</small></div></div></div></li>'
+            );
+
+            $('#displayname').val('@uid');
+            $('#message').focus();
+
+            $.connection.hub.start().done( function () {
+                $('#sendmessage').click( function () {
+                    chat.server.send($('#displayname').val(), $('#message').val());
+                    $('#message').val('').focus();
+                });
+            });
+        });
+
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+    </script>
+}

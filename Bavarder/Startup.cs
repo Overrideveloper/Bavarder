@@ -1,7 +1,7 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(Bavarder.Startup))]
+[assembly: OwinStartupAttribute(typeof(Bavarder.Startup))]  
 namespace Bavarder
 {
     public partial class Startup
@@ -9,6 +9,7 @@ namespace Bavarder
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            app.MapSignalR();
         }
     }
 }
