@@ -32,7 +32,7 @@
         </div>
         <div class="col-md-4">
             <div class="panel panel-primary">
-                <div class="panel-heading">
+                <div id="usercount" class="panel-heading">
                     ONLINE USERS
                 </div>
                 <div class="panel-body">
@@ -50,6 +50,21 @@
         $(function () {
             var chat = $.connection.generalChatHub;
 
+            chat.client.online = function (count, name) {
+                $('div#usercount').text("ONLINE USERS: " + count);
+                $('ul#activelist').append
+                (
+                    '<li id="'+name+'" class="media"><div class="media-body"><div class="media"><a class="pull-left" href="#">' +
+                    '<img class="media-object img-circle" style="max-height:40px;" src="../../UploadedFiles/@Bavarder.Enums.UploadType.ProfileImage/@uid/@user.UserPhoto" /></a>' +
+                    '<div class="media-body" ><h5>' + name + '</h5><small class="text-muted">Active</small></div></div></div></li>'
+                );
+            }
+
+            chat.client.offline = function (count, name) {
+                $('div#usercount').text("ONLINE USERS: " + count);
+                $('li#name').remove();
+            }
+
             chat.client.newMessage = function (uid, username, photo, message) {
                 $('#discussion').append
                 (
@@ -60,17 +75,10 @@
                 );
             };
 
-            $('#activelist').append
-            (
-                '<li class="media"><div class="media-body"><div class="media"><a class="pull-left" href="#">'+
-                '<img class="media-object img-circle" style="max-height:40px;" src="../../UploadedFiles/@Bavarder.Enums.UploadType.ProfileImage/@uid/@user.UserPhoto" /></a>'+
-                '<div class="media-body" ><h5>@user.UserName </h5><small class="text-muted">Active</small></div></div></div></li>'
-            );
-
             $('#displayname').val('@uid');
             $('#message').focus();
 
-            $.connection.hub.start().done( function () {
+            $.connection.hub.start().done(function () {
                 $('#sendmessage').click( function () {
                     chat.server.send($('#displayname').val(), $('#message').val());
                     $('#message').val('').focus();

@@ -102,12 +102,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Contact Information</div>
                 <div class="panel-body">
-                    @if(user.Twitter != null){ <span><i class="fa fa-twitter fa-2x"></i> @user.Twitter</span><br /> }
-                    @if (user.Snapchat != null){ <span><i class="fa fa-snapchat fa-2x"></i> @user.Snapchat</span><br /> }
+                    @if(user.Twitter != null){ <span><i class="fa fa-twitter info fa-2x" style="background-color:lightblue"></i> @user.Twitter</span><br /> }
+                    @if (user.Snapchat != null){ <span><i class="fa fa-snapchat fa-2x" style="background-color:yellow"></i> @user.Snapchat</span><br /> }
                     @if (user.EmailVisible != null && user.EmailVisible == true && user.Email != null)
                     {  <span><i class="fa fa-envelope fa-2x"></i> @user.Email</span><br /> }
                     @if (user.PhoneVisible != null && user.PhoneVisible == true && user.PhoneNumber != null)
-                    {  <span><i class="fa fa-phone fa-2x"></i> @user.PhoneNumber</span><br /> }                                            
+                    {  <span><i class="fa fa-phone fa-2x" style="background-color:green"></i> @user.PhoneNumber</span><br /> }                                            
                 </div>
             </div>
         </div>
@@ -120,7 +120,7 @@
                 </div>
             </div>
         </div>
-        <div id="push"></div>
+        <div id="push"></div> 
     </div> 
 </div>
 </div>
