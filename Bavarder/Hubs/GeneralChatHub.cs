@@ -32,7 +32,7 @@ namespace Bavarder.Hubs
         public override Task OnDisconnected(bool stopCalled)
         {
             _userCount--;
-            var name = Context.User.Identity.Name;
+            var name = Context.User.Identity.Name;  
             var context = GlobalHost.ConnectionManager.GetHubContext<GeneralChatHub>();
             context.Clients.All.offline(_userCount, name);
             return base.OnDisconnected(stopCalled);
