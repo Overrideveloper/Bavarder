@@ -1,7 +1,7 @@
 ﻿var genChat = {}
 
 //Models
-getChat.chatMessage = function (sender, content, dateSent) {
+genChat.chatMessage = function (sender, content, dateSent) {
     var self = this;
     self.username = sender;
     self.content = content;
@@ -19,7 +19,7 @@ genChat.user = function (username, userId) {
 //Viewmodels
 genChat.chatViewModel = function () {
     var self = this;
-    self.this = ko.observableArray();
+    self.messages = ko.observableArray();
 }
 
 genChat.connectedUsersViewodel = function () {

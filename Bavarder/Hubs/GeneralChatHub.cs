@@ -26,18 +26,14 @@ namespace Bavarder.Hubs
 
         public void Send(ChatMessage message)
         {
-            string uid = _context.GetUserByConnectionId(Context.ConnectionId);
-            var appDb = new ApplicationDbContext();
-            var user = appDb.Users.Find(uid);
-            var username = user.UserName;
-            var photo = user.UserPhoto;
             if (!string.IsNullOrEmpty(message.Content))
             {
                 message.Content = HttpUtility.HtmlEncode(message.Content);
                 HashSet<string> extractUrls;
                 message.Content = TextParser.TransformAndExtractUrls(message.Content, out extractUrls);
                 message.TimeStamp = DateTime.Now;
-                Clients.All.newMessage(uid, username, photo, message);
+                message.Username = Context.User.Identity.GetUserName();
+                Clients.All.newMessage(message);
             }
         }
 
