@@ -16,10 +16,26 @@
                 <div class="panel-heading">
                     RECENT CHAT HISTORY
                 </div>
-                <div class="panel-body">
-                    <ul class="media-list" id="discussion" style="height:400px; overflow-y:auto">
+
+                <div class="panel-body" id="chat-list">
+                    <ul class="media-list" data-bind="foreach: messages" style=" height:400px; overflow-y:auto">
+                        <li class="media">
+                            <div class="media-body">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <span data-bind="text: username"></span>
+                                        <hr style="width:10px"/>
+                                        <span data-bind="html: content"></span>
+                                        <br />
+                                        <small class="text-muted" data-bind="text: timestamp.toLocaleTimeString()"></small>
+                                        <hr />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </div>
+
                 <div class="panel-footer">
                     <div class="input-group">
                         <input type="text" id="message" class="form-control" placeholder="Enter Message" />
@@ -35,8 +51,18 @@
                 <div id="usercount" class="panel-heading">
                     ONLINE USERS
                 </div>
-                <div class="panel-body">
-                    <ul class="media-list" id="activelist" style="height:400px; overflow-y:auto"></ul>
+                <div class="panel-body" id="users-list">
+                    <ul class="media-list" data-bind="foreach: contacts" style="height:400px; overflow-y:auto">
+                        <li class="media">
+                            <div class="media-body">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h5 data-bind="text: username"></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <input type="hidden" id="displayname" />
@@ -45,9 +71,10 @@
 </div>
 @section Scripts{
     <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
-    <script src="~/signalr/hubs"></script> 
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/ChatScripts/general.js"></script> 
     <script>
-        $(function () {
+        @*$(function () {
             var chat = $.connection.generalChatHub;
 
             chat.client.online = function (count, name) {
@@ -89,6 +116,94 @@
         function htmlEncode(value) {
             var encodedValue = $('<div />').text(value).html();
             return encodedValue;
-        }
+        }*@
+    </script>
+    <script type="text/javascript">
+        Date.prototype.setISO8601 = function (dString) {
+
+            var regexp = /(\d\d\d\d)(-)?(\d\d)(-)?(\d\d)(T)?(\d\d)(:)?(\d\d)(:)?(\d\d)(\.\d+)?(Z|([+-])(\d\d)(:)?(\d\d))/;
+
+            if (dString.toString().match(new RegExp(regexp))) {
+                var d = dString.match(new RegExp(regexp));
+                var offset = 0;
+
+                this.setUTCDate(1);
+                this.setUTCFullYear(parseInt(d[1], 10));
+                this.setUTCMonth(parseInt(d[3], 10) - 1);
+                this.setUTCDate(parseInt(d[5], 10));
+                this.setUTCHours(parseInt(d[7], 10));
+                this.setUTCMinutes(parseInt(d[9], 10));
+                this.setUTCSeconds(parseInt(d[11], 10));
+                if (d[12])
+                    this.setUTCMilliseconds(parseFloat(d[12]) * 1000);
+                else
+                    this.setUTCMilliseconds(0);
+                if (d[13] != 'Z') {
+                    offset = (d[15] * 60) + parseInt(d[17], 10);
+                    offset *= ((d[14] == '-') ? -1 : 1);
+                    this.setTime(this.getTime() - offset * 60 * 1000);
+                }
+            }
+            else {
+                this.setTime(Date.parse(dString));
+            }
+            return this;
+        };
+
+        $(document).ready(function () {
+            var chat = new genChat.chatViewModel();
+            var users = new genChat.connectedUsersViewodel();
+            var currentUser = new genChat.user("@Context.User.Identity.GetUserName()", "@Context.User.Identity.GetUserId()")
+            console.log(currentUser);
+            var genChatHub = $.connection.generalChatHub;
+
+            genChatHub.client.newMessage = function (message) {
+                var date = new Date();
+                date.setISO8601(message.TimeStamp);
+                chat.messages.push(new genChat.chatMessage(message.Username, message.Content, date));
+            }
+
+            genChatHub.client.leaves = function (userId, username, timestamp) {
+                var disconnectedUser = new genChat.user(username, userId);
+                users.customRemove(disconnectedUser);
+            }
+
+            function sendMessageContent() {
+                var content = $('#message').val();
+                if (content != "" && content != null) {
+                    var msg = new genChat.chatMessage(currentUser.username, content);
+                    genChatHub.server.send(msg).done(function () {
+                        $('#message').val("");
+                    }).fail(function (e) {
+                        alert("Could not connect to server");
+                    });
+                }
+            }
+
+            $('#sendmessage').click(function () {
+                sendMessageContent();
+            });
+
+            $('#message').keypress(function (e) {
+                if (e.which == 13) {
+                    sendMessageContent();
+                }
+            });
+
+            ko.applyBindings(users, $('#users-list')[0]);
+            ko.applyBindings(chat, $('#chat-list')[0]);
+
+            $.connection.hub.start()
+                    .done(function () {
+                        genChatHub.server.getConnectedUsers()
+                                    .done(function (connectedUsers) {
+                                        ko.utils.arrayForEach(connectedUsers, function (item) {
+                                            users.contacts.push(new genChat.user(item.Username, item.Id));
+                                        });
+                                    }).done(function () {
+                                        genChatHub.server.joined();
+                                    });
+                    });
+        });
     </script>
 }
