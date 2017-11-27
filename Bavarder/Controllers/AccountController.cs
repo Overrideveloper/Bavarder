@@ -101,7 +101,7 @@ namespace Bavarder.Controllers
                 user.Relationship = model.Relationship;
                 user.Country = model.Country;
                 user.UserPhoto = UserPhoto != null && UserPhoto.FileName != ""
-                                    ? new FileUploader().UploadFile(UserPhoto, Enums.UploadType.ProfileImage, User.Identity.GetUserId())
+                                    ? new FileUploader().UploadFile(UserPhoto, Enums.UploadType.ProfileImage, user.Id)
                                     : null;
                 user.DOB = model.DOB;
                 user.DateJoined = DateTime.Now;
