@@ -15,11 +15,11 @@
         <li>
             @if (user.UserPhoto != null)
             {
-                <img title="profile image" id="profileImg" class="img-circle img-responsive" width="30" height="20" src="~/UploadedFiles/@Bavarder.Enums.UploadType.ProfileImage/@uid/@user.UserPhoto">
+                <img title="profile image" id="profileImag" class="img-circle img-responsive" width="30" height="20" src="~/UploadedFiles/@Bavarder.Enums.UploadType.ProfileImage/@uid/@user.UserPhoto">
             }
             else
             {
-                <img title="profile image" id="profileImg" class="img-circle img-responsive" width="30" height="20" src="~/Images/user.png">
+                <img title="profile image" id="profileImag" class="img-circle img-responsive" width="30" height="20" src="~/Images/user.png">
             }
         </li>
         <li>@Html.ActionLink(User.Identity.Name, "UserProfile", "Home")</li>
